@@ -1,0 +1,5 @@
+ggml (0.0.0+20250114.d92321c-1) unstable; urgency=medium
+
+  * Based on GGML commit d92321c
+
+ -- Mathieu Baudier <mbaudier@argeo.org>  Mon, 20 Jan 2025 14:17:58 +0000

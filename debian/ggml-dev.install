@@ -1,0 +1,4 @@
+/usr/include/*
+/usr/share/pkgconfig/*.pc
+
+include/ggml-cpp.h usr/include/

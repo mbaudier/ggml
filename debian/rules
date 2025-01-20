@@ -1,0 +1,45 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+#export DH_VERBOSE = 1
+
+LC_ALL := C.UTF-8
+export LC_ALL
+
+include /usr/share/dpkg/architecture.mk
+
+DEB_BUILD_OPTIONS ?= parallel=8
+
+build_multiarch=build/$(DEB_HOST_MULTIARCH)
+install_lib_multiarch=debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
+
+%:
+# Use build/ for output, so that it is in the .gitignore of upstream
+	dh $@ --buildsystem=cmake --builddirectory=$(build_multiarch)
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+	-DCMAKE_SKIP_BUILD_RPATH=ON \
+	-DCMAKE_LIBRARY_ARCHITECTURE="$(DEB_HOST_MULTIARCH)" \
+	-DBUILD_SHARED_LIBS=ON \
+	-DGGML_CCACHE=OFF \
+	-DGGML_STANDALONE=ON \
+	-DGGML_BUILD_TESTS=OFF \
+	-DGGML_BUILD_EXAMPLES=OFF \
+	\
+	-DGGML_BACKEND_DL=ON \
+	-DGGML_CPU_ALL_VARIANTS=ON \
+	-DGGML_NATIVE=OFF \
+	-DGGML_RPC=ON \
+	-DGGML_BLAS=ON \
+	-DGGML_BLAS_VENDOR=OpenBLAS \
+	-DGGML_VULKAN=ON \
+	-DGGML_CUDA=OFF \
+
+override_dh_auto_install:
+	dh_auto_install
+	env
+	# Since no CMake install configuration is available for the libggml-* backend target:
+	# - we set CMAKE_SKIP_BUILD_RPATH=ON during build
+	# - we install the backends explicitly in the dist tree
+	install -t $(install_lib_multiarch) $(build_multiarch)/bin/libggml-*.so
+	

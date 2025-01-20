@@ -1,0 +1,86 @@
+Source: ggml
+Section: science
+Priority: optional
+Maintainer: Mathieu Baudier <mbaudier@argeo.org>
+Build-Depends: debhelper-compat (= 13), pkg-config, cmake-data, cmake, cpio, git, 
+	libopenblas-openmp-dev, libopenblas64-openmp-dev, libvulkan-dev, glslc
+Standards-Version: 4.5.1
+Homepage: https://github.com/ggerganov
+Rules-Requires-Root: binary-targets
+
+Package: ggml
+Priority: optional
+Architecture: any
+Depends: libggml, libggml-cpu
+Description: Tensor library for machine learning (metapackage)
+ GGML Tensor library for machine learning. (metapackage)
+
+Package: libggml-base
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}
+Description: Tensor library for machine learning (base)
+ GGML Tensor library for machine learning. (base)
+
+Package: libggml
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends},
+ libggml-base
+Description: Tensor library for machine learning (loader)
+ GGML Tensor library for machine learning. (loader)
+
+Package: libggml-cpu
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends},
+ libggml-base
+Description: Tensor library for machine learning (CPU backend)
+ GGML Tensor library for machine learning. (CPU backend)
+
+Package: libggml-blas
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends},
+ libggml,
+# GGML shows warning that it uses OpenMP if default OpenBLAS (pthread) is used.
+ libopenblas0-openmp, libopenblas64-0-openmp,
+Description: Tensor library for machine learning (OpenBLAS backend)
+ GGML Tensor library for machine learning. (OpenBLAS backend)
+
+Package: libggml-rpc
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends},
+ libggml
+Description: Tensor library for machine learning (RPC backend)
+ GGML Tensor library for machine learning. (RPC backend)
+
+Package: libggml-vulkan
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends},
+ libggml,
+ libvulkan1
+Description: Tensor library for machine learning (Vulkan backend)
+ GGML Tensor library for machine learning. (Vulkan backend)
+
+Package: ggml-dev
+Priority: optional
+Architecture: any
+Depends: ggml (= ${binary:Version})
+Description: Tensor library for machine learning (development files)
+ GGML Tensor library for machine learning. (development files)
+ 
