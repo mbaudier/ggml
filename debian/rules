@@ -37,9 +37,15 @@ override_dh_auto_configure:
 
 override_dh_auto_install:
 	dh_auto_install
-	env
 	# Since no CMake install configuration is available for the libggml-* backend target:
 	# - we set CMAKE_SKIP_BUILD_RPATH=ON during build
 	# - we install the backends explicitly in the dist tree
-	install -t $(install_lib_multiarch) $(build_multiarch)/bin/libggml-*.so
-	
+	for file in $(build_multiarch)/bin/libggml-*.so; do \
+    	patchelf --set-soname $$(basename "$$file") $$file; \
+		install -t $(install_lib_multiarch) $$file; \
+	done
+	#install -t $(install_lib_multiarch) $(build_multiarch)/bin/libggml-*.so
+
+override_dh_dwz:
+	# dwz is failing most probably because of using patchelf in order to set soname
+	echo Disable dh_dwz since it is failing
