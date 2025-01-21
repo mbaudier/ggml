@@ -9,7 +9,6 @@ export LC_ALL
 include /usr/share/dpkg/architecture.mk
 
 build_multiarch=build/$(DEB_HOST_MULTIARCH)
-install_lib_multiarch=debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
 install_libexec_multiarch=debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)
 
 # parallelism
@@ -61,10 +60,6 @@ override_dh_auto_install:
 	# - we install the backends explicitly in libexec so that executables can be installed with them
 	mkdir -p $(install_libexec_multiarch)/ggml
 	for file in $(build_multiarch)/bin/libggml-*.so; do \
-    	patchelf --set-soname $$(basename "$$file") $$file; \
+    	#patchelf --set-soname $$(basename "$$file") $$file; \
 		install -t $(install_libexec_multiarch)/ggml $$file; \
 	done
-
-override_dh_dwz:
-	# dwz is failing most probably because of using patchelf in order to set soname
-	echo Disable dh_dwz since it is failing
