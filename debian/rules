@@ -10,6 +10,7 @@ include /usr/share/dpkg/architecture.mk
 
 build_multiarch=build/$(DEB_HOST_MULTIARCH)
 install_lib_multiarch=debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
+install_libexec_multiarch=debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)
 
 # parallelism
 DEB_BUILD_OPTIONS ?= parallel=8
@@ -54,12 +55,14 @@ override_dh_auto_configure:
 
 override_dh_auto_install:
 	dh_auto_install
+	
 	# Since no CMake install configuration is available for the libggml-* backend target:
 	# - we set CMAKE_SKIP_BUILD_RPATH=ON during build
-	# - we install the backends explicitly in the dist tree
+	# - we install the backends explicitly in libexec so that executables can be installed with them
+	mkdir -p $(install_libexec_multiarch)/ggml
 	for file in $(build_multiarch)/bin/libggml-*.so; do \
     	patchelf --set-soname $$(basename "$$file") $$file; \
-		install -t $(install_lib_multiarch) $$file; \
+		install -t $(install_libexec_multiarch)/ggml $$file; \
 	done
 
 override_dh_dwz:
