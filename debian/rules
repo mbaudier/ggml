@@ -5,12 +5,27 @@
 LC_ALL := C.UTF-8
 export LC_ALL
 
+# multiarch
 include /usr/share/dpkg/architecture.mk
-
-DEB_BUILD_OPTIONS ?= parallel=8
 
 build_multiarch=build/$(DEB_HOST_MULTIARCH)
 install_lib_multiarch=debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
+
+# parallelism
+DEB_BUILD_OPTIONS ?= parallel=8
+
+# ggml specific
+ifeq ($(DEB_HOST_ARCH),aarch64)
+	GGML_CPU_AARCH64 ?= ON
+else
+	GGML_CPU_AARCH64 ?= OFF
+endif
+
+ifneq ($(DEB_HOST_ARCH),i386)
+	GGML_CPU_ALL_VARIANTS ?= ON
+else
+	GGML_CPU_ALL_VARIANTS ?= OFF
+endif
 
 %:
 # Use build/ for output, so that it is in the .gitignore of upstream
@@ -25,10 +40,11 @@ override_dh_auto_configure:
 	-DGGML_STANDALONE=ON \
 	-DGGML_BUILD_TESTS=OFF \
 	-DGGML_BUILD_EXAMPLES=OFF \
-	\
+	-DGGML_CPU_AARCH64=$(GGML_CPU_AARCH64) \
 	-DGGML_BACKEND_DL=ON \
-	-DGGML_CPU_ALL_VARIANTS=ON \
+	-DGGML_CPU_ALL_VARIANTS=$(GGML_CPU_ALL_VARIANTS) \
 	-DGGML_NATIVE=OFF \
+	\
 	-DGGML_RPC=ON \
 	-DGGML_BLAS=ON \
 	-DGGML_BLAS_VENDOR=OpenBLAS \
@@ -44,7 +60,6 @@ override_dh_auto_install:
     	patchelf --set-soname $$(basename "$$file") $$file; \
 		install -t $(install_lib_multiarch) $$file; \
 	done
-	#install -t $(install_lib_multiarch) $(build_multiarch)/bin/libggml-*.so
 
 override_dh_dwz:
 	# dwz is failing most probably because of using patchelf in order to set soname
