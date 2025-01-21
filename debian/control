@@ -83,6 +83,6 @@ Package: ggml-dev
 Priority: optional
 Architecture: any
 Depends: ${misc:Depends},
- ggml (= ${binary:Version})
+ libggml (= ${binary:Version})
 Description: Tensor library for machine learning (development files)
  GGML Tensor library for machine learning. (development files)
