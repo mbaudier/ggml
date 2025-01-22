@@ -9,6 +9,7 @@ export LC_ALL
 include /usr/share/dpkg/architecture.mk
 
 build_multiarch=build/$(DEB_HOST_MULTIARCH)
+install_lib_multiarch=debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
 install_libexec_multiarch=debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)
 
 # parallelism
@@ -63,3 +64,8 @@ override_dh_auto_install:
     	#patchelf --set-soname $$(basename "$$file") $$file; \
 		install -t $(install_libexec_multiarch)/ggml $$file; \
 	done
+	
+	# whisper.cpp currently requires linking to a CPU backend
+	# we therefore provide a link in /usr/lib/*/
+	# TODO use alternative
+	ln -s --relative $(install_libexec_multiarch)/ggml/libggml-cpu-sandybridge.so $(install_lib_multiarch)/libggml-cpu.so
