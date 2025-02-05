@@ -1,4 +1,5 @@
 /usr/include/*
 /usr/share/pkgconfig/*.pc
+/usr/lib/*/cmake/ggml/*.cmake
 
 include/ggml-cpp.h usr/include/
