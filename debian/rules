@@ -23,7 +23,7 @@ else
 endif
 
 ifneq ($(DEB_HOST_ARCH),i386)
-	GGML_CPU_ALL_VARIANTS ?= ON
+	GGML_CPU_ALL_VARIANTS ?= OFF
 else
 	GGML_CPU_ALL_VARIANTS ?= OFF
 endif
@@ -50,7 +50,7 @@ override_dh_auto_configure:
 	-DGGML_RPC=ON \
 	-DGGML_BLAS=ON \
 	-DGGML_BLAS_VENDOR=OpenBLAS \
-	-DGGML_VULKAN=ON \
+	-DGGML_VULKAN=OFF \
 	-DGGML_CUDA=OFF \
 
 override_dh_auto_install:
