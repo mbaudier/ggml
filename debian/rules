@@ -51,7 +51,7 @@ override_dh_auto_configure:
 	-DGGML_BLAS=ON \
 	-DGGML_BLAS_VENDOR=OpenBLAS \
 	-DGGML_VULKAN=ON \
-	-DGGML_CUDA=OFF \
+	-DGGML_CUDA=ON \
 
 override_dh_auto_install:
 	dh_auto_install
