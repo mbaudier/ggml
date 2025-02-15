@@ -1,10 +1,10 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: ggml
-Upstream-Contact: https://github.com/ggerganov/ggml/issues
-Source: https://github.com/ggerganov/ggml
+Upstream-Contact: https://github.com/ggml-org/issues
+Source: https://github.com/ggml-org/ggml
 
 Files: *
-Copyright: Copyright (c) 2023-2025 The ggml, llama.cpp and whisper.cpp authors
+Copyright: Copyright (c) 2023-2025 The ggml authors
 License: MIT 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
