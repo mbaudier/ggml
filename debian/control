@@ -6,7 +6,7 @@ Build-Depends: debhelper-compat (= 13), pkg-config, cmake-data, cmake, cpio, git
 	libopenblas-openmp-dev, libopenblas64-openmp-dev [amd64 arm64],
 	libvulkan-dev, glslc
 Standards-Version: 4.5.1
-Homepage: https://github.com/ggerganov
+Homepage: https://github.com/ggml-org/
 Rules-Requires-Root: binary-targets
 
 Package: ggml
