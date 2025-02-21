@@ -2,7 +2,7 @@ Source: ggml
 Section: science
 Priority: optional
 Maintainer: Mathieu Baudier <mbaudier@argeo.org>
-Build-Depends: debhelper-compat (= 13), pkg-config, cmake-data, cmake, cpio, git, patchelf,
+Build-Depends: debhelper-compat (= 13), pkgconf, cmake-data, cmake, cpio, git, patchelf,
 	libopenblas-openmp-dev, libopenblas64-openmp-dev [amd64 arm64],
 	libvulkan-dev, glslc
 Standards-Version: 4.5.1
@@ -10,7 +10,6 @@ Homepage: https://github.com/ggml-org/
 Rules-Requires-Root: binary-targets
 
 Package: ggml
-Priority: optional
 Architecture: any
 Depends: ${misc:Depends},
  libggml, libggml-cpu
@@ -18,7 +17,6 @@ Description: Tensor library for machine learning (metapackage)
  GGML Tensor library for machine learning. (metapackage)
 
 Package: libggml-base
-Priority: optional
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
@@ -27,7 +25,6 @@ Description: Tensor library for machine learning (base)
  GGML Tensor library for machine learning. (base)
 
 Package: libggml
-Priority: optional
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
@@ -37,7 +34,6 @@ Description: Tensor library for machine learning (loader)
  GGML Tensor library for machine learning. (loader)
 
 Package: libggml-cpu
-Priority: optional
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
@@ -47,7 +43,6 @@ Description: Tensor library for machine learning (CPU backend)
  GGML Tensor library for machine learning. (CPU backend)
 
 Package: libggml-blas
-Priority: optional
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
@@ -59,7 +54,6 @@ Description: Tensor library for machine learning (OpenBLAS backend)
  GGML Tensor library for machine learning. (OpenBLAS backend)
 
 Package: libggml-rpc
-Priority: optional
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Depends}, ${misc:Pre-Depends}
@@ -69,7 +63,6 @@ Description: Tensor library for machine learning (RPC backend)
  GGML Tensor library for machine learning. (RPC backend)
 
 Package: libggml-vulkan
-Priority: optional
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
@@ -80,7 +73,6 @@ Description: Tensor library for machine learning (Vulkan backend)
  GGML Tensor library for machine learning. (Vulkan backend)
 
 Package: ggml-dev
-Priority: optional
 Architecture: any
 Depends: ${misc:Depends},
  libggml (= ${binary:Version})

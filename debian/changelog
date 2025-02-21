@@ -1,5 +1,7 @@
-ggml (0.0.1722-1) unstable; urgency=medium
+ggml (0.0.1722-2) unstable; urgency=medium
 
-  * Update upstream
+  * Improve packaging based on mentoring feedback
+  
+  Closes: #1096105
 
- -- Mathieu Baudier <mbaudier@argeo.org>  Sat, 15 Feb 2025 06:39:55 +0000
+ -- Mathieu Baudier <mbaudier@argeo.org>  Fri, 21 Feb 2025 06:38:50 +0000
