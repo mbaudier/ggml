@@ -73,3 +73,6 @@ override_dh_auto_install:
 	# Provide a symbolic link to the most portable CPU backend
 	# so that it can be used for builds (e.g. whisper.cpp build requires a CPU backend)
 	ln -s --relative $(install_libexec_multiarch)/ggml/libggml-cpu-sandybridge.so $(install_libexec_multiarch)/ggml/libggml-cpu.so
+
+override_dh_installexamples:
+	dh_installexamples --exclude=.gitignore
