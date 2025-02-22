@@ -12,7 +12,7 @@ Rules-Requires-Root: binary-targets
 Package: ggml
 Architecture: any
 Depends: ${misc:Depends},
- libggml, libggml-cpu
+ libggml0, libggml-cpu
 Description: Tensor library for machine learning (metapackage)
  ggml is a pure C/C++ library implementing tensor computations
  used by neural networks. It is the basis for llama.cpp (large language models)
@@ -23,7 +23,8 @@ Description: Tensor library for machine learning (metapackage)
  installed additionally, typically to support specific computing hardware
  such as GPUs.
 
-Package: libggml-base
+Package: libggml-base0
+Section: libs
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
@@ -32,12 +33,13 @@ Description: Tensor library for machine learning (base)
  The ggml base library provides the backend-independent API
  upon which specialized libraries or applications can be built.
 
-Package: libggml
+Package: libggml0
+Section: libs
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends},
- libggml-base
+ libggml-base0
 Description: Tensor library for machine learning (loader)
  The ggml library is a thin high-level layer mostly
  responsible for loading the various ggml backends,
@@ -48,7 +50,7 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends},
- libggml
+ libggml0
 Description: Tensor library for machine learning (CPU backend)
  The ggml CPU backend provides computations based solely
  on plain CPU, without software or hardware acceleration.
@@ -63,7 +65,7 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends},
- libggml,
+ libggml0,
 # GGML shows warning that it uses OpenMP if default OpenBLAS (pthread) is used.
  libopenblas0-openmp, libopenblas64-0-openmp [amd64 arm64],
 Description: Tensor library for machine learning (OpenBLAS backend)
@@ -75,7 +77,7 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Depends}, ${misc:Pre-Depends}
 Depends: ${shlibs:Depends},
- libggml
+ libggml0
 Description: Tensor library for machine learning (RPC backend)
  The ggml RPC backend allows one to distribute computations over
  the network on remote ggml backends.
@@ -85,7 +87,7 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends},
- libggml,
+ libggml0,
  libvulkan1
 Description: Tensor library for machine learning (Vulkan backend)
  The ggml Vulkan backend provides hardware acceleration of the
@@ -95,7 +97,7 @@ Description: Tensor library for machine learning (Vulkan backend)
 Package: ggml-dev
 Architecture: any
 Depends: ${misc:Depends},
- libggml (= ${binary:Version})
+ libggml0 (= ${binary:Version}), libggml-base0 (= ${binary:Version})
 Description: Tensor library for machine learning (development files)
  This developments package provides the files required to build
  software based on ggml.

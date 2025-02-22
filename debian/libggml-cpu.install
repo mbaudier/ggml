@@ -1,4 +1,1 @@
-/usr/libexec/*/ggml/libggml-cpu*.so
-
-# portable CPU backend
-/usr/lib/*/libggml-cpu.so
+/usr/libexec/*/ggml/libggml-cpu-*.so

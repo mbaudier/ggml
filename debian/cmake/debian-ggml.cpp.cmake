@@ -1,0 +1,2 @@
+set(GGML_BUILD_NUMBER 1722)
+

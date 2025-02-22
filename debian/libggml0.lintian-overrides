@@ -1,0 +1,2 @@
+libggml0: hardening-no-fortify-functions
+libggml0: no-symbols-control-file

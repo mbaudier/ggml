@@ -15,6 +15,9 @@ install_libexec_multiarch=debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)
 # parallelism
 DEB_BUILD_OPTIONS ?= parallel=8
 
+# hardening
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
 # ggml specific
 ifeq ($(DEB_HOST_ARCH),aarch64)
 	GGML_CPU_AARCH64 ?= ON
@@ -35,7 +38,9 @@ endif
 override_dh_auto_configure:
 	dh_auto_configure -- \
 	-DCMAKE_SKIP_BUILD_RPATH=ON \
+	-DGGML_ALL_WARNINGS=OFF \
 	-DCMAKE_LIBRARY_ARCHITECTURE="$(DEB_HOST_MULTIARCH)" \
+	-DCMAKE_PROJECT_ggml_INCLUDE=debian/cmake/debian-ggml.cpp.cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_SHARED_LIBS=ON \
 	-DGGML_CCACHE=OFF \
@@ -65,7 +70,6 @@ override_dh_auto_install:
 		install -t $(install_libexec_multiarch)/ggml $$file; \
 	done
 	
-	# whisper.cpp currently requires linking to a CPU backend
-	# we therefore provide a link in /usr/lib/*/
-	# TODO use alternative
-	ln -s --relative $(install_libexec_multiarch)/ggml/libggml-cpu-sandybridge.so $(install_lib_multiarch)/libggml-cpu.so
+	# Provide a symbolic link to the most portable CPU backend
+	# so that it can be used for builds (e.g. whisper.cpp build requires a CPU backend)
+	ln -s --relative $(install_libexec_multiarch)/ggml/libggml-cpu-sandybridge.so $(install_libexec_multiarch)/ggml/libggml-cpu.so
