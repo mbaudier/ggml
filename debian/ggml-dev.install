@@ -5,7 +5,5 @@
 # Symbolic links
 /usr/lib/*/libggml.so
 /usr/lib/*/libggml-base.so
-# portable CPU backend
-/usr/libexec/*/ggml/libggml-cpu.so
 
 include/ggml-cpp.h usr/include/

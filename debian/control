@@ -101,7 +101,7 @@ Package: ggml-dev
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
- libggml0 (= ${binary:Version}), libggml-base0 (= ${binary:Version})
+ libggml0 (= ${binary:Version}), libggml-base0 (= ${binary:Version}),
 Description: Tensor library for machine learning (development files)
  This developments package provides the files required to build
  software based on ggml.
