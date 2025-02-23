@@ -40,7 +40,7 @@ override_dh_auto_configure:
 	-DCMAKE_SKIP_BUILD_RPATH=ON \
 	-DGGML_ALL_WARNINGS=OFF \
 	-DCMAKE_LIBRARY_ARCHITECTURE="$(DEB_HOST_MULTIARCH)" \
-	-DCMAKE_PROJECT_ggml_INCLUDE=debian/cmake/debian-ggml.cpp.cmake \
+	-DCMAKE_PROJECT_ggml_INCLUDE=debian/cmake/debian-ggml.cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_SHARED_LIBS=ON \
 	-DGGML_CCACHE=OFF \
