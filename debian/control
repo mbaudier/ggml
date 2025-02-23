@@ -6,6 +6,8 @@ Build-Depends: debhelper-compat (= 13), pkgconf, cmake-data, cmake, cpio, git, p
 	libopenblas-openmp-dev, libopenblas64-openmp-dev [amd64 arm64],
 	libvulkan-dev, glslc
 Standards-Version: 4.7.0
+Vcs-Git: https://git.djapps.eu/pkg/ggml/sources/ggml
+Vcs-Browser: https://git.djapps.eu/?p=pkg/ggml/sources/ggml;a=summary
 Homepage: https://github.com/ggml-org/
 Rules-Requires-Root: binary-targets
 
@@ -96,6 +98,7 @@ Description: Tensor library for machine learning (Vulkan backend)
 
 Package: ggml-dev
 Architecture: any
+Section: libdevel
 Depends: ${misc:Depends},
  libggml0 (= ${binary:Version}), libggml-base0 (= ${binary:Version})
 Description: Tensor library for machine learning (development files)
