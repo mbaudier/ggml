@@ -1,1 +1,3 @@
+# According to https://wiki.debian.org/UsingSymbolsFiles
+# "For C++ libraries it is often better not to ship symbols files."
 libggml-base0: no-symbols-control-file

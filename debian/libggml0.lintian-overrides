@@ -1,2 +1,7 @@
+# Debian hardening flags are applied,
+# so it seems a false positive
 libggml0: hardening-no-fortify-functions
+
+# According to https://wiki.debian.org/UsingSymbolsFiles
+# "For C++ libraries it is often better not to ship symbols files."
 libggml0: no-symbols-control-file

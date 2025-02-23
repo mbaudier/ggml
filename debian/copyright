@@ -2,6 +2,9 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: ggml
 Upstream-Contact: https://github.com/ggml-org/issues
 Source: https://github.com/ggml-org/ggml
+#Files-Excluded: 
+# src/ggml-kompute/kompute/*
+#Comment: Third-party code (which is not used here).
 
 Files: *
 Copyright: Copyright (c) 2023-2025 The ggml authors
