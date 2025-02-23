@@ -2,9 +2,10 @@ Source: ggml
 Section: science
 Priority: optional
 Maintainer: Mathieu Baudier <mbaudier@argeo.org>
-Build-Depends: debhelper-compat (= 13), pkgconf, cmake-data, cmake, cpio, git, patchelf,
+Build-Depends: debhelper-compat (= 13), pkgconf,
+	cmake-data, cmake,
 	libopenblas-openmp-dev, libopenblas64-openmp-dev [amd64 arm64],
-	libvulkan-dev, glslc
+	libvulkan-dev, glslc,
 Standards-Version: 4.7.0
 Vcs-Git: https://git.djapps.eu/pkg/ggml/sources/ggml
 Vcs-Browser: https://git.djapps.eu/?p=pkg/ggml/sources/ggml;a=summary
