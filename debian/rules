@@ -25,7 +25,7 @@ else
 	GGML_CPU_AARCH64 ?= OFF
 endif
 
-ifneq ($(DEB_HOST_ARCH),i386)
+ifeq ($(DEB_HOST_ARCH),amd64)
 	GGML_CPU_ALL_VARIANTS ?= ON
 else
 	GGML_CPU_ALL_VARIANTS ?= OFF
