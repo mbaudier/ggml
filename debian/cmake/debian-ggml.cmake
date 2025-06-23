@@ -1,2 +1,0 @@
-set(GGML_BUILD_NUMBER 2015)
-

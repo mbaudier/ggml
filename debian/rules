@@ -5,10 +5,12 @@
 LC_ALL := C.UTF-8
 export LC_ALL
 
-# multiarch
+# For multiarch
 include /usr/share/dpkg/architecture.mk
+# For DEB_VERSION_UPSTREAM
+include /usr/share/dpkg/pkg-info.mk
 
-build_multiarch=build/$(DEB_HOST_MULTIARCH)
+install_bin=debian/tmp/usr/bin
 install_lib_multiarch=debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
 install_libexec_multiarch=debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)
 
@@ -33,18 +35,17 @@ endif
 
 %:
 # Use build/ for output, so that it is in the .gitignore of upstream
-	dh $@ --buildsystem=cmake --builddirectory=$(build_multiarch)
+	dh $@ --buildsystem=cmake
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
+	-DGGML_BUILD_NUMBER=$(subst 0.0.,,$(DEB_VERSION_UPSTREAM)) \
 	-DCMAKE_LIBRARY_ARCHITECTURE="$(DEB_HOST_MULTIARCH)" \
-	-DCMAKE_SKIP_BUILD_RPATH=ON \
-	-DCMAKE_PROJECT_ggml_INCLUDE=debian/cmake/debian-ggml.cmake \
-	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS=ON \
 	-DGGML_CCACHE=OFF \
 	-DGGML_STANDALONE=ON \
-	-DGGML_BUILD_TESTS=OFF \
+	-DGGML_BUILD_TESTS=ON \
 	-DGGML_BUILD_EXAMPLES=OFF \
 	-DGGML_CPU_AARCH64=$(GGML_CPU_AARCH64) \
 	-DGGML_BACKEND_DL=ON \
@@ -60,13 +61,10 @@ override_dh_auto_configure:
 override_dh_auto_install:
 	dh_auto_install
 	
-	# Since no CMake install configuration is available for the libggml-* backend target:
-	# - we set CMAKE_SKIP_BUILD_RPATH=ON during build
-	# - we install the backends explicitly in libexec so that executables can be installed with them
+	# Move backends *.so to libexec, as we don't want them lurking in /usr/bin 
 	mkdir -p $(install_libexec_multiarch)/ggml
-	for file in $(build_multiarch)/bin/libggml-*.so; do \
-    	#patchelf --set-soname $$(basename "$$file") $$file; \
-		install -t $(install_libexec_multiarch)/ggml $$file; \
+	for file in $(install_bin)/libggml-*.so; do \
+		mv $$file $(install_libexec_multiarch)/ggml; \
 	done
 
 override_dh_installexamples:
