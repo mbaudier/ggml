@@ -112,6 +112,12 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
  libggml0 (= ${binary:Version}), libggml-base0 (= ${binary:Version}),
+# The generated cmake config then requires to find all backends
+# TODO check with upstream
+ libggml-backend-cpu (= ${binary:Version}),
+ libggml-backend-blas (= ${binary:Version}),
+ libggml-backend-rpc (= ${binary:Version}),
+ libggml-backend-vulkan (= ${binary:Version}),
 Description: Tensor library for machine learning (development files)
  This developments package provides the files required to build
  software based on ggml.
