@@ -32,7 +32,7 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
-# Explicitly conflicts with Debian official
+# Explicitly conflict with Debian official
 Conflicts: libggml-base
 Description: Tensor library for machine learning (base)
  The ggml base library provides the backend-independent API
@@ -45,7 +45,7 @@ Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends},
  libggml-base0
-# Explicitly conflicts with Debian official
+# Explicitly conflict with Debian official
 Conflicts: libggml
 Description: Tensor library for machine learning (loader)
  The ggml library is a thin high-level layer mostly
@@ -58,7 +58,7 @@ Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends},
  libggml0
-# Explicitly conflicts with Debian official
+# Explicitly conflict with Debian official
 Conflicts: libggml-cpu
 Description: Tensor library for machine learning (CPU backend)
  The ggml CPU backend provides computations based solely
@@ -77,7 +77,7 @@ Depends: ${misc:Depends}, ${shlibs:Depends},
  libggml0,
 # GGML shows warning that it uses OpenMP if default OpenBLAS (pthread) is used.
  libopenblas0-openmp, libopenblas64-0-openmp [amd64 arm64],
-# Explicitly conflicts with Debian official
+# Explicitly conflict with Debian official
 Conflicts: libggml-blas
 Description: Tensor library for machine learning (OpenBLAS backend)
  The ggml BLAS backend provides software acceleration of the computations
@@ -97,7 +97,7 @@ Package: libggml-backend-vulkan
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-# Explicitly conflicts with Debian official
+# Explicitly conflict with Debian official
 Conflicts: libggml-vulkan
 Depends: ${misc:Depends}, ${shlibs:Depends},
  libggml0,
