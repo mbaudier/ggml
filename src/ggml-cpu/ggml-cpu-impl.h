@@ -320,20 +320,16 @@ inline static int32x4_t ggml_vdotq_s32(int32x4_t acc, int8x16_t a, int8x16_t b) 
 
 #ifdef __wasm_simd128__
 #include <wasm_simd128.h>
-#else
+#endif
+
 #ifdef __POWER9_VECTOR__
 #include <altivec.h>
-#else
+#endif
+
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <intrin.h>
-#else
-#if defined(__AVX__) || defined(__AVX2__) || defined(__AVX512F__) || defined(__SSSE3__) || defined(__SSE3__) || defined(__SSE__)
-#if !defined(__riscv)
+#elif defined(__AVX__) || defined(__AVX2__) || defined(__AVX512F__) || defined(__SSSE3__) || defined(__SSE3__) || defined(__SSE__)
 #include <immintrin.h>
-#endif
-#endif
-#endif
-#endif
 #endif
 
 #ifdef __riscv_v_intrinsic
@@ -506,6 +502,9 @@ static __m256 __lasx_xvreplfr2vr_s(const float val) {
 
 // TODO: move to ggml-threading
 void ggml_barrier(struct ggml_threadpool * tp);
+
+void ggml_threadpool_chunk_set(struct ggml_threadpool * tp, int value);
+int  ggml_threadpool_chunk_add(struct ggml_threadpool * tp, int value);
 
 #ifdef __cplusplus
 }
