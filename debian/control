@@ -15,7 +15,7 @@ Rules-Requires-Root: binary-targets
 Package: ggml
 Architecture: any
 Depends: ${misc:Depends},
- libggml0, libggml-cpu
+ libggml0, libggml-backend-cpu
 Description: Tensor library for machine learning (metapackage)
  ggml is a pure C/C++ library implementing tensor computations
  used by neural networks. It is the basis for llama.cpp (large language models)
@@ -32,6 +32,8 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
+# Explicitly conflicts with Debian official
+Conflicts: libggml-base
 Description: Tensor library for machine learning (base)
  The ggml base library provides the backend-independent API
  upon which specialized libraries or applications can be built.
@@ -43,17 +45,21 @@ Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends},
  libggml-base0
+# Explicitly conflicts with Debian official
+Conflicts: libggml
 Description: Tensor library for machine learning (loader)
  The ggml library is a thin high-level layer mostly
  responsible for loading the various ggml backends,
  and connect them to the API provided by the ggml base library.
 
-Package: libggml-cpu
+Package: libggml-backend-cpu
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends},
  libggml0
+# Explicitly conflicts with Debian official
+Conflicts: libggml-cpu
 Description: Tensor library for machine learning (CPU backend)
  The ggml CPU backend provides computations based solely
  on plain CPU, without software or hardware acceleration.
@@ -63,7 +69,7 @@ Description: Tensor library for machine learning (CPU backend)
  allowing one to run computations on older CPU while still benefiting from
  the capabilities of recent ones.
 
-Package: libggml-blas
+Package: libggml-backend-blas
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
@@ -71,11 +77,13 @@ Depends: ${misc:Depends}, ${shlibs:Depends},
  libggml0,
 # GGML shows warning that it uses OpenMP if default OpenBLAS (pthread) is used.
  libopenblas0-openmp, libopenblas64-0-openmp [amd64 arm64],
+# Explicitly conflicts with Debian official
+Conflicts: libggml-blas
 Description: Tensor library for machine learning (OpenBLAS backend)
  The ggml BLAS backend provides software acceleration of the computations
  based on OpenBLAS.
 
-Package: libggml-rpc
+Package: libggml-backend-rpc
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Depends}, ${misc:Pre-Depends}
@@ -85,10 +93,12 @@ Description: Tensor library for machine learning (RPC backend)
  The ggml RPC backend allows one to distribute computations over
  the network on remote ggml backends.
 
-Package: libggml-vulkan
+Package: libggml-backend-vulkan
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
+# Explicitly conflicts with Debian official
+Conflicts: libggml-vulkan
 Depends: ${misc:Depends}, ${shlibs:Depends},
  libggml0,
  libvulkan1
