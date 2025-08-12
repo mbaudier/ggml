@@ -1,7 +1,7 @@
-ggml (0.0.2309-1) unstable; urgency=medium
+ggml (0.0.2404-1) unstable; urgency=medium
 
   * Update upstream
 
   Closes: #1096105
 
- -- Mathieu Baudier <mbaudier@argeo.org>  Fri, 01 Aug 2025 13:32:46 +0000
+ -- Mathieu Baudier <mbaudier@argeo.org>  Tue, 12 Aug 2025 11:40:08 +0000
