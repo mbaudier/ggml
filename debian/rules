@@ -1,70 +1,34 @@
 #!/usr/bin/make -f
-# See debhelper(7) (uncomment to enable)
 #export DH_VERBOSE = 1
-
-LC_ALL := C.UTF-8
-export LC_ALL
-
-# For multiarch
-include /usr/share/dpkg/architecture.mk
-# For DEB_VERSION_UPSTREAM
-include /usr/share/dpkg/pkg-info.mk
-
-install_bin=debian/tmp/usr/bin
-install_lib_multiarch=debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
-install_libexec_multiarch=debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)
-
-# parallelism
-DEB_BUILD_OPTIONS ?= parallel=8
-
-# hardening
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
-# ggml specific
-ifeq ($(DEB_HOST_ARCH),aarch64)
-	GGML_CPU_AARCH64 ?= ON
-else
-	GGML_CPU_AARCH64 ?= OFF
-endif
+include /usr/share/dpkg/pkg-info.mk
+GGML_BUILD_NUMBER=$(subst 0.0.,,$(DEB_VERSION_UPSTREAM))
 
-ifeq ($(DEB_HOST_ARCH),amd64)
-	GGML_CPU_ALL_VARIANTS ?= ON
-else
-	GGML_CPU_ALL_VARIANTS ?= OFF
-endif
+# GGML_NATIVE:ON corresponds to -march=native
+CMAKE_OPTS  = -DGGML_NATIVE=OFF \
+              -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+              -DGGML_BUILD_NUMBER=$(GGML_BUILD_NUMBER) \
+              -DGGML_BUILD_TESTS=OFF \
+              -DGGML_BUILD_EXAMPLES=OFF \
+              -DGGML_BACKEND_DL=ON \
+
+CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON \
+              -DGGML_BLAS=ON \
+              -DGGML_VULKAN=ON \
+              -DGGML_RPC=ON \
 
 %:
-# Use build/ for output, so that it is in the .gitignore of upstream
 	dh $@ --buildsystem=cmake
 
 override_dh_auto_configure:
-	dh_auto_configure -- \
-	-DGGML_BUILD_NUMBER=$(subst 0.0.,,$(DEB_VERSION_UPSTREAM)) \
-	-DCMAKE_LIBRARY_ARCHITECTURE="$(DEB_HOST_MULTIARCH)" \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DBUILD_SHARED_LIBS=ON \
-	-DGGML_CCACHE=OFF \
-	-DGGML_STANDALONE=ON \
-	-DGGML_BUILD_TESTS=ON \
-	-DGGML_BUILD_EXAMPLES=OFF \
-	-DGGML_CPU_AARCH64=$(GGML_CPU_AARCH64) \
-	-DGGML_BACKEND_DL=ON \
-	-DGGML_CPU_ALL_VARIANTS=$(GGML_CPU_ALL_VARIANTS) \
-	-DGGML_NATIVE=OFF \
-	\
-	-DGGML_RPC=ON \
-	-DGGML_BLAS=ON \
-	-DGGML_BLAS_VENDOR=OpenBLAS \
-	-DGGML_VULKAN=ON \
-	-DGGML_CUDA=OFF \
+	dh_auto_configure -- $(CMAKE_OPTS)
 
-override_dh_auto_install:
-	dh_auto_install
-	
+execute_after_dh_auto_install-arch:
 	# Move backends *.so to libexec, as we don't want them lurking in /usr/bin 
-	mkdir -p $(install_libexec_multiarch)/ggml
-	for file in $(install_bin)/libggml-*.so; do \
-		mv $$file $(install_libexec_multiarch)/ggml; \
+	mkdir -p debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)/ggml
+	for file in debian/tmp/usr/bin/libggml-*.so; do \
+		mv $$file debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)/ggml; \
 	done
 
 override_dh_installexamples:
