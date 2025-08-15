@@ -7,10 +7,10 @@ Subject: improve-cmake-build
  1 file changed, 4 insertions(+)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 0425fd6..65a08da 100644
+index 177fb28..692f439 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -400,5 +400,9 @@ if (BUILD_SHARED_LIBS)
+@@ -411,5 +411,9 @@ if (BUILD_SHARED_LIBS)
          set_target_properties(${target} PROPERTIES POSITION_INDEPENDENT_CODE ON)
          target_compile_definitions(${target} PRIVATE GGML_BUILD)
          target_compile_definitions(${target} PUBLIC  GGML_SHARED)
