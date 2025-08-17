@@ -5,9 +5,13 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 include /usr/share/dpkg/pkg-info.mk
 GGML_BUILD_NUMBER=$(subst 0.0.,,$(DEB_VERSION_UPSTREAM))
 
+FLAGS_ARGEO=-O3 -g -DNDEBUG
+
 # GGML_NATIVE:ON corresponds to -march=native
 CMAKE_OPTS  = -DGGML_NATIVE=OFF \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+              -DCMAKE_C_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
+              -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
               -DGGML_BUILD_NUMBER=$(GGML_BUILD_NUMBER) \
               -DGGML_BUILD_TESTS=OFF \
               -DGGML_BUILD_EXAMPLES=OFF \
@@ -24,6 +28,7 @@ endif
 
 ifeq ($(filter pkg.ggml.nocuda,$(DEB_BUILD_PROFILES)),)
 CMAKE_OPTS += -DGGML_CUDA=ON \
+              -DCMAKE_CUDA_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
               -DGGML_CUDA_FORCE_MMQ=ON \
               -DGGML_CUDA_FA_ALL_QUANTS=OFF \
               -DCUDAToolkit_ROOT=/usr
