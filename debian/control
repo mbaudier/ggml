@@ -8,10 +8,12 @@ Vcs-Git: https://git.djapps.eu/pkg/ggml/sources/ggml
 Homepage: https://github.com/ggml-org/ggml
 Build-Depends: cmake,
                debhelper-compat (= 13),
-               libblas-dev,
+               libopenblas-openmp-dev,
+               libopenblas64-openmp-dev [amd64 arm64],
                pkgconf,
-               libvulkan-dev,
-               glslc,
+               libvulkan-dev            <!pkg.ggml.novulkan>,
+               glslc                    <!pkg.ggml.novulkan>,
+               nvidia-cuda-toolkit-gcc  <!pkg.ggml.nocuda>,
 Rules-Requires-Root: no
 
 Package: libggml-base0
@@ -26,7 +28,7 @@ Description: Tensor library for machine learning (base)
 Package: libggml0
 Architecture: any
 Multi-Arch: same
-Depends: libggml-base0,
+Depends: libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends},
 Description: Tensor library for machine learning (loader)
@@ -48,7 +50,7 @@ Description: Tensor library for machine learning (development files)
 Package: libggml-backend-cpu
 Architecture: any
 Multi-Arch: same
-Depends: libggml-base0,
+Depends: libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Description: Tensor library for machine learning (CPU backend)
@@ -63,7 +65,9 @@ Description: Tensor library for machine learning (CPU backend)
 Package: libggml-backend-blas
 Architecture: any
 Multi-Arch: same
-Depends: libggml-base0,
+Depends: libggml-base0 (= ${binary:Version}),
+         libopenblas0-openmp,
+         libopenblas64-0-openmp [amd64 arm64],
          ${misc:Depends},
          ${shlibs:Depends}
 Recommends: libopenblas0 | libblis4 | libmkl-rt | libblas3
@@ -84,10 +88,23 @@ Description: Tensor library for machine learning (RPC backend)
 Package: libggml-backend-vulkan
 Architecture: any
 Multi-Arch: same
-Depends: libggml-base0,
+Depends: libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
+Build-Profiles: <!pkg.ggml.novulkan>
 Description: Tensor library for machine learning (Vulkan backend)
  The ggml Vulkan backend provides hardware acceleration of the
  computations based on the Vulkan API. This is typically used
  to leverage GPU parallel computations capabilities.
+
+Package: libggml-backend-cuda
+Architecture: any
+Multi-Arch: same
+Depends: libggml-base0 (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Build-Profiles: <!pkg.ggml.nocuda>
+Description: Tensor library for machine learning (CUDA backend)
+ The ggml CUDA backend provides hardware acceleration of the
+ computations based on the CUDA API. This is typically used
+ to leverage Nvidia GPU parallel computations capabilities.
