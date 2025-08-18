@@ -22,6 +22,14 @@ CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON \
               -DGGML_BLAS_VENDOR=OpenBLAS \
               -DGGML_RPC=ON \
 
+ifeq ($(DEB_HOST_ARCH),aarch64)
+CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF \
+              -DGGML_CPU_ARM_ARCH=armv8-a
+
+else
+
+CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON
+
 ifeq ($(filter pkg.ggml.novulkan,$(DEB_BUILD_PROFILES)),)
 CMAKE_OPTS += -DGGML_VULKAN=ON
 endif
@@ -33,6 +41,8 @@ CMAKE_OPTS += -DGGML_CUDA=ON \
               -DGGML_CUDA_FA_ALL_QUANTS=OFF \
               -DCUDAToolkit_ROOT=/usr
 endif
+
+endif # aarch64
 
 # Use build/ for output, so that it is in the .gitignore of upstream
 %:
