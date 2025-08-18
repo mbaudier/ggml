@@ -20,8 +20,8 @@ CMAKE_OPTS  = -DGGML_NATIVE=OFF \
               -DGGML_BUILD_EXAMPLES=OFF \
               -DGGML_BACKEND_DL=ON \
 
-CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON \
-              -DGGML_BLAS=ON \
+# Common backends
+CMAKE_OPTS += -DGGML_BLAS=ON \
               -DGGML_BLAS_VENDOR=OpenBLAS \
               -DGGML_RPC=ON \
 
