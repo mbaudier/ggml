@@ -50,16 +50,16 @@ endif # aarch64
 # Use build/ for output, so that it is in the .gitignore of upstream
 %:
 	dh $@ --buildsystem=cmake \
-	 --builddirectory=build/$(DEB_HOST_MULTIARCH)
+	 --builddirectory=build/$(DEB_TARGET_MULTIARCH)
 
 override_dh_auto_configure:
 	dh_auto_configure -- $(CMAKE_OPTS)
 
 execute_after_dh_auto_install-arch:
 	# Move backends *.so to libexec, as we don't want them lurking in /usr/bin 
-	mkdir -p debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)/ggml
+	mkdir -p debian/tmp/usr/libexec/$(DEB_TARGET_MULTIARCH)/ggml
 	for file in debian/tmp/usr/bin/libggml-*.so; do \
-		mv $$file debian/tmp/usr/libexec/$(DEB_HOST_MULTIARCH)/ggml; \
+		mv $$file debian/tmp/usr/libexec/$(DEB_TARGET_MULTIARCH)/ggml; \
 	done
 
 override_dh_installexamples:
