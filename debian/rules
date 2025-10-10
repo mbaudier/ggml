@@ -21,9 +21,7 @@ CMAKE_OPTS  = -DGGML_NATIVE=OFF \
               -DGGML_BACKEND_DL=ON \
 
 # Common backends
-CMAKE_OPTS += -DGGML_BLAS=ON \
-              -DGGML_BLAS_VENDOR=OpenBLAS \
-              -DGGML_RPC=ON \
+CMAKE_OPTS += -DGGML_RPC=ON \
 
 ifeq ($(DEB_TARGET_ARCH),arm64)
 CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF \

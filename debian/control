@@ -8,8 +8,6 @@ Vcs-Git: https://git.djapps.eu/pkg/ggml/sources/ggml
 Homepage: https://github.com/ggml-org/ggml
 Build-Depends: cmake,
                debhelper-compat (= 13),
-               libopenblas-openmp-dev,
-               libopenblas64-openmp-dev [amd64 arm64],
                pkgconf,
                libvulkan-dev            [amd64] <!pkg.ggml.novulkan>,
                glslc                    [amd64] <!pkg.ggml.novulkan>,
@@ -62,23 +60,10 @@ Description: Tensor library for machine learning (CPU backend)
  allowing one to run computations on older CPU while still benefiting from
  the capabilities of recent ones.
 
-Package: libggml-backend-blas
-Architecture: any
-Multi-Arch: same
-Depends: libggml-base0 (= ${binary:Version}),
-         libopenblas0-openmp,
-         libopenblas64-0-openmp [amd64 arm64],
-         ${misc:Depends},
-         ${shlibs:Depends}
-Recommends: libopenblas0 | libblis4 | libmkl-rt | libblas3
-Description: Tensor library for machine learning (OpenBLAS backend)
- The ggml BLAS backend provides software acceleration of the computations
- based on OpenBLAS.
-
 Package: libggml-backend-rpc
 Architecture: any
 Multi-Arch: same
-Depends: libggml-base0,
+Depends: libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Description: Tensor library for machine learning (RPC backend)
