@@ -23,17 +23,18 @@ CMAKE_OPTS  = -DGGML_NATIVE=OFF \
 # Common backends
 CMAKE_OPTS += -DGGML_RPC=ON \
 
+ifeq ($(filter pkg.ggml.novulkan,$(DEB_BUILD_PROFILES)),)
+CMAKE_OPTS += -DGGML_VULKAN=ON
+endif
+
+# Optimize for Raspberry Pi 5
 ifeq ($(DEB_TARGET_ARCH),arm64)
 CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF \
-              -DGGML_CPU_ARM_ARCH=armv8-a
+              -DGGML_CPU_ARM_ARCH=armv8.2-a+crypto+fp16+rcpc+dotprod
 
 else
 
 CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON
-
-ifeq ($(filter pkg.ggml.novulkan,$(DEB_BUILD_PROFILES)),)
-CMAKE_OPTS += -DGGML_VULKAN=ON
-endif
 
 ifeq ($(filter pkg.ggml.nocuda,$(DEB_BUILD_PROFILES)),)
 CMAKE_OPTS += -DGGML_CUDA=ON \

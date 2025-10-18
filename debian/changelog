@@ -1,6 +1,7 @@
 ggml (0.9.4.58-1) unstable; urgency=medium
 
   * Upstream llama.cpp sync
+  * Optimize arm64 build for Raspberry Pi 5
 
  -- Mathieu Baudier <mbaudier@argeo.org>  Sat, 18 Oct 2025 08:29:05 +0000
 
