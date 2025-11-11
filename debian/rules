@@ -2,6 +2,16 @@
 #export DH_VERBOSE = 1
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
+# Derivative
+distribution := $(shell lsb_release --id --short)
+distrel := $(shell lsb_release --codename --short)
+derivative := $(shell if dpkg-vendor --derives-from Ubuntu; then echo Ubuntu; \
+               elif dpkg-vendor --derives-from Debian; then echo Debian; \
+               else echo Unknown; fi)
+ifeq ($(distrel),n/a)
+  distrel := sid
+endif
+
 # For multiarch
 include /usr/share/dpkg/architecture.mk
 # For DEB_VERSION_UPSTREAM
@@ -19,6 +29,7 @@ CMAKE_OPTS  = -DGGML_NATIVE=OFF \
               -DGGML_BUILD_TESTS=OFF \
               -DGGML_BUILD_EXAMPLES=OFF \
               -DGGML_BACKEND_DL=ON \
+              -DGGML_BACKEND_DIR=/usr/lib/${DEB_HOST_MULTIARCH}/ggml/backends0 \
 
 # Common backends
 CMAKE_OPTS += -DGGML_RPC=ON \
@@ -27,11 +38,15 @@ ifeq ($(filter pkg.ggml.novulkan,$(DEB_BUILD_PROFILES)),)
 CMAKE_OPTS += -DGGML_VULKAN=ON
 endif
 
-# Optimize for Raspberry Pi 5
 ifeq ($(DEB_TARGET_ARCH),arm64)
+ifeq ($(distribution),ubuntu)
+# Optimize for Raspberry Pi 5 on Ubuntu
 CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF \
-              -DGGML_CPU_ARM_ARCH=armv8.2-a+crypto+fp16+rcpc+dotprod
-
+              -DGGML_NATIVE
+else
+CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF \
+              -DGGML_CPU_ARM_ARCH=armv8.0-a
+endif
 else
 
 CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON
@@ -44,7 +59,7 @@ CMAKE_OPTS += -DGGML_CUDA=ON \
               -DCUDAToolkit_ROOT=/usr
 endif
 
-endif # aarch64
+endif # arm64
 
 # Use build/ for output, so that it is in the .gitignore of upstream
 %:
@@ -53,13 +68,6 @@ endif # aarch64
 
 override_dh_auto_configure:
 	dh_auto_configure -- $(CMAKE_OPTS)
-
-execute_after_dh_auto_install-arch:
-	# Move backends *.so to libexec, as we don't want them lurking in /usr/bin 
-	mkdir -p debian/tmp/usr/libexec/$(DEB_TARGET_MULTIARCH)/ggml
-	for file in debian/tmp/usr/bin/libggml-*.so; do \
-		mv $$file debian/tmp/usr/libexec/$(DEB_TARGET_MULTIARCH)/ggml; \
-	done
 
 override_dh_installexamples:
 	dh_installexamples --exclude=.gitignore

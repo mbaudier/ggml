@@ -7,6 +7,7 @@ Vcs-Browser: https://git.djapps.eu/?p=pkg/ggml/sources/ggml;a=summary
 Vcs-Git: https://git.djapps.eu/pkg/ggml/sources/ggml
 Homepage: https://github.com/ggml-org/ggml
 Build-Depends: cmake,
+               lsb-release,
                debhelper-compat (= 13),
                pkgconf,
                libvulkan-dev            <!pkg.ggml.novulkan>,
