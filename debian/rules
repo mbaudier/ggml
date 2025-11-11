@@ -39,13 +39,13 @@ CMAKE_OPTS += -DGGML_VULKAN=ON
 endif
 
 ifeq ($(DEB_TARGET_ARCH),arm64)
-ifeq ($(distribution),ubuntu)
+ifeq ($(distribution),Ubuntu)
 # Optimize for Raspberry Pi 5 on Ubuntu
 CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF \
               -DGGML_NATIVE
 else
 CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF \
-              -DGGML_CPU_ARM_ARCH=armv8.0-a
+              -DGGML_CPU_ARM_ARCH=armv8-a
 endif
 else
 
