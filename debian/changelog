@@ -1,3 +1,9 @@
+ggml (0.9.4.395-1) unstable; urgency=medium
+
+  * Upstream llama.cpp and whisper.cpp syncs
+
+ -- Mathieu Baudier <mbaudier@argeo.org>  Sat, 27 Dec 2025 10:52:27 +0000
+
 ggml (0.9.4.185-1) unstable; urgency=medium
 
   * Upstream llama.cpp and whisper.cpp syncs
