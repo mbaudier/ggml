@@ -54,8 +54,6 @@ endif
 ifeq ($(filter pkg.ggml.nocuda,$(DEB_BUILD_PROFILES)),)
 CMAKE_OPTS += -DGGML_CUDA=ON \
               -DCMAKE_CUDA_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
-              -DGGML_CUDA_FORCE_MMQ=ON \
-              -DGGML_CUDA_FA_ALL_QUANTS=OFF \
               -DCUDAToolkit_ROOT=/usr
 endif
 
