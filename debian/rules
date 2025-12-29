@@ -21,8 +21,7 @@ GGML_BUILD_NUMBER=$(subst 0.0.,,$(DEB_VERSION_UPSTREAM))
 FLAGS_ARGEO=-O3 -g -DNDEBUG
 
 # GGML_NATIVE:ON corresponds to -march=native
-CMAKE_OPTS  = -DGGML_NATIVE=OFF \
-              -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+CMAKE_OPTS  = -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DGGML_BUILD_NUMBER=$(GGML_BUILD_NUMBER) \
               -DGGML_BUILD_TESTS=OFF \
               -DGGML_BUILD_EXAMPLES=OFF \
@@ -38,7 +37,8 @@ CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF
 
 ifeq ($(distribution),Ubuntu)
 # Optimize for Raspberry Pi 5 on Ubuntu
-FLAGS_ARGEO+= -mcpu=cortex-a76+crc+crypto
+#FLAGS_ARGEO+= -mcpu=cortex-a76+crc+crypto
+CMAKE_OPTS += -DGGML_NATIVE=ON
 else
 CMAKE_OPTS += -DGGML_CPU_ARM_ARCH=armv8-a
 endif
