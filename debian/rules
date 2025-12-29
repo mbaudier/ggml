@@ -34,14 +34,13 @@ CMAKE_OPTS += -DGGML_RPC=ON \
 
 ifeq ($(DEB_TARGET_ARCH),arm64)
 
+CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF
+
 ifeq ($(distribution),Ubuntu)
 # Optimize for Raspberry Pi 5 on Ubuntu
-CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF \
-              -DGGML_CPU_ARM_ARCH=armv8.4-a
 FLAGS_ARGEO+= -mcpu=cortex-a76+crc+crypto
 else
-CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF \
-              -DGGML_CPU_ARM_ARCH=armv8-a
+CMAKE_OPTS += -DGGML_CPU_ARM_ARCH=armv8-a
 endif
 
 else # amd64
