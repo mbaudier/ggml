@@ -72,7 +72,7 @@ Description: Tensor library for machine learning (RPC backend)
  the network on remote ggml backends.
 
 Package: libggml-backend-vulkan
-Architecture: any
+Architecture: amd64
 Multi-Arch: same
 Depends: libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
