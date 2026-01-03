@@ -1,3 +1,10 @@
+ggml (0.9.5-1) unstable; urgency=medium
+
+  * Upstream release
+  * Drop .so version patch, now provided by upstream
+
+ -- Mathieu Baudier <mbaudier@argeo.org>  Sat, 03 Jan 2026 10:06:55 +0000
+
 ggml (0.9.4.395-1) unstable; urgency=medium
 
   * Upstream llama.cpp and whisper.cpp syncs
