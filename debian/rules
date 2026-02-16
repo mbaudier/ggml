@@ -30,21 +30,6 @@ CMAKE_OPTS  = -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 # Common backends
 CMAKE_OPTS += -DGGML_RPC=ON \
 
-ifeq ($(DEB_TARGET_ARCH),arm64)
-FLAGS_ARGEO=-O3 -g -DNDEBUG
-
-CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF
-
-ifeq ($(distribution),Ubuntu)
-# Optimize for Raspberry Pi 5 on Ubuntu
-#FLAGS_ARGEO+= -mcpu=cortex-a76+crc+crypto
-CMAKE_OPTS += -DGGML_CPU_ARM_ARCH=armv8-a
-#CMAKE_OPTS += -DGGML_NATIVE=ON
-else
-CMAKE_OPTS += -DGGML_CPU_ARM_ARCH=armv8-a
-endif
-
-else # amd64
 FLAGS_ARGEO=-O3 -g -DNDEBUG
 
 CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON
@@ -58,8 +43,6 @@ CMAKE_OPTS += -DGGML_CUDA=ON \
               -DCMAKE_CUDA_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
               -DCUDAToolkit_ROOT=/usr
 endif
-
-endif # arm64
 
 CMAKE_OPTS += -DCMAKE_C_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
               -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \

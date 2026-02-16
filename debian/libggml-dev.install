@@ -1,9 +1,6 @@
-/usr/include/*
-/usr/share/pkgconfig/*.pc
-/usr/lib/*/cmake/ggml/*.cmake
+usr/lib/${DEB_HOST_MULTIARCH}/libggml.so
+usr/lib/${DEB_HOST_MULTIARCH}/libggml-base.so
+usr/include
 
-# Symbolic links
-/usr/lib/*/libggml.so
-/usr/lib/*/libggml-base.so
-
-include/ggml-cpp.h usr/include/
+/usr/share/pkgconfig/ggml.pc        usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/
+usr/lib/${DEB_HOST_MULTIARCH}/cmake

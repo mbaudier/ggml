@@ -10,9 +10,9 @@ Build-Depends: cmake,
                lsb-release,
                debhelper-compat (= 13),
                pkgconf,
-               libvulkan-dev            [amd64] <!pkg.ggml.novulkan>,
-               glslc                    [amd64] <!pkg.ggml.novulkan>,
-               nvidia-cuda-toolkit-gcc  [amd64] <!pkg.ggml.nocuda>,
+               libvulkan-dev            <!pkg.ggml.novulkan>,
+               glslc                    <!pkg.ggml.novulkan>,
+               nvidia-cuda-toolkit-gcc  <!pkg.ggml.nocuda>,
 Rules-Requires-Root: no
 
 Package: libggml-base0
@@ -46,7 +46,7 @@ Description: Tensor library for machine learning (development files)
  This developments package provides the files required to build
  software based on ggml.
 
-Package: libggml-backend-cpu
+Package: libggml0-backend-cpu
 Architecture: any
 Multi-Arch: same
 Depends: libggml-base0 (= ${binary:Version}),
@@ -61,7 +61,7 @@ Description: Tensor library for machine learning (CPU backend)
  allowing one to run computations on older CPU while still benefiting from
  the capabilities of recent ones.
 
-Package: libggml-backend-rpc
+Package: libggml0-backend-rpc
 Architecture: any
 Multi-Arch: same
 Depends: libggml-base0 (= ${binary:Version}),
@@ -71,7 +71,7 @@ Description: Tensor library for machine learning (RPC backend)
  The ggml RPC backend allows one to distribute computations over
  the network on remote ggml backends.
 
-Package: libggml-backend-vulkan
+Package: libggml0-backend-vulkan
 Architecture: amd64
 Multi-Arch: same
 Depends: libggml-base0 (= ${binary:Version}),
@@ -83,7 +83,7 @@ Description: Tensor library for machine learning (Vulkan backend)
  computations based on the Vulkan API. This is typically used
  to leverage GPU parallel computations capabilities.
 
-Package: libggml-backend-cuda
+Package: libggml0-backend-cuda
 Architecture: amd64
 Multi-Arch: same
 Depends: libggml-base0 (= ${binary:Version}),
