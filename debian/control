@@ -12,7 +12,7 @@ Build-Depends: cmake,
                pkgconf,
                libvulkan-dev            <!pkg.ggml.novulkan>,
                glslc                    <!pkg.ggml.novulkan>,
-               nvidia-cuda-toolkit-gcc  <!pkg.ggml.nocuda>,
+               nvidia-cuda-toolkit-gcc  [amd64] <!pkg.ggml.nocuda>,
 Rules-Requires-Root: no
 
 Package: libggml-base0
