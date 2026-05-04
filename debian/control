@@ -6,10 +6,15 @@ Standards-Version: 4.7.2
 Vcs-Browser: https://git.djapps.eu/?p=pkg/ggml/sources/ggml;a=summary
 Vcs-Git: https://git.djapps.eu/pkg/ggml/sources/ggml
 Homepage: https://github.com/ggml-org/ggml
-Build-Depends: cmake,
+Build-Depends: debhelper-compat (= 13),
                lsb-release,
-               debhelper-compat (= 13),
+               cmake,
                pkgconf,
+               clang,
+               lld,
+               llvm,
+               libc++-dev,
+               libomp-dev,
                libvulkan-dev       <!pkg.ggml.novulkan>,
                glslc               <!pkg.ggml.novulkan>,
                cuda-nvcc-13-2      <!pkg.ggml.nocuda>,
@@ -44,8 +49,8 @@ Conflicts: libggml-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: libggml0 (= ${binary:Version}),
-         libggml-base0 (= ${binary:Version}),
+Depends: argeo-libggml0 (= ${binary:Version}),
+         argeo-libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
 Description: Tensor library for machine learning (development files)
  This developments package provides the files required to build

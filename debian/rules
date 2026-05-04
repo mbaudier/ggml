@@ -1,6 +1,11 @@
 #!/usr/bin/make -f
 #export DH_VERBOSE = 1
 
+# clang build
+export CC = clang
+export CXX = clang++
+export LD = ld.lld
+
 export DEB_BUILD_MAINT_OPTIONS = hardening=-all
 
 # Derivative
@@ -27,6 +32,15 @@ CMAKE_OPTS  = -DCMAKE_BUILD_TYPE=RelWithDebInfo \
               -DGGML_BACKEND_DL=ON \
               -DGGML_BACKEND_DIR=/usr/lib/${DEB_HOST_MULTIARCH}/ggml/backends0 \
 
+# clang build
+CMAKE_OPTS += -DCMAKE_C_COMPILER=clang \
+              -DCMAKE_CXX_COMPILER=clang++ \
+              -DCMAKE_CXX_FLAGS=-stdlib=libc++ \
+              -DCMAKE_LINKER_TYPE=LLD \
+
+# OpenMP seems to work better with clang than with gcc
+CMAKE_OPTS += -DGGML_OPENMP=ON
+
 # Common backends
 CMAKE_OPTS += -DGGML_RPC=ON \
 
@@ -34,8 +48,8 @@ FLAGS_ARGEO=-O3 -g -DNDEBUG
 
 ifeq ($(DEB_TARGET_ARCH),arm64)
 
-CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=OFF
-CMAKE_OPTS += -DGGML_CPU_ARM_ARCH=armv8.4-a
+CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON
+#CMAKE_OPTS += -DGGML_CPU_ARM_ARCH=armv8.4-a
 
 else # amd64
 
@@ -43,16 +57,28 @@ CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON
 
 endif # arm64
 
+##
+## VULKAN
+##
 ifeq ($(filter pkg.ggml.novulkan,$(DEB_BUILD_PROFILES)),)
 CMAKE_OPTS += -DGGML_VULKAN=ON
 endif
 
+##
+## CUDA
+##
 ifeq ($(filter pkg.ggml.nocuda,$(DEB_BUILD_PROFILES)),)
 CMAKE_OPTS += -DGGML_CUDA=ON \
               -DCMAKE_CUDA_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
               -DCMAKE_CUDA_COMPILER=/usr/local/cuda-13/bin/nvcc
+# Compute capabilities supported by Argeo
+# cf. https://developer.nvidia.com/cuda/gpus
+CMAKE_OPTS += -DCMAKE_CUDA_ARCHITECTURES="121;120;89;86"
+# All K/V cache combinations
+CMAKE_OPTS += -DGGML_CUDA_FA_ALL_QUANTS=ON
 endif
 
+# Add Argeo optimization flags
 CMAKE_OPTS += -DCMAKE_C_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
               -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
 
@@ -66,3 +92,7 @@ override_dh_auto_configure:
 
 override_dh_installexamples:
 	dh_installexamples --exclude=.gitignore
+
+override_dh_dwz:
+	# Skip dwz optimization when using clang
+	
