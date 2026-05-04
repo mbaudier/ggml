@@ -1,4 +1,4 @@
-Source: ggml
+Source: argeo-ggml
 Section: libs
 Priority: optional
 Maintainer: Mathieu Baudier <mbaudier@argeo.org>
@@ -15,7 +15,8 @@ Build-Depends: cmake,
                nvidia-cuda-toolkit-gcc  [amd64] <!pkg.ggml.nocuda>,
 Rules-Requires-Root: no
 
-Package: libggml-base0
+Package: argeo-libggml-base0
+Conflicts: libggml0
 Architecture: any
 Multi-Arch: same
 Depends: ${misc:Depends},
@@ -24,10 +25,11 @@ Description: Tensor library for machine learning (base)
  The ggml base library provides the backend-independent API
  upon which specialized libraries or applications can be built.
 
-Package: libggml0
+Package: argeo-libggml0
+Conflicts: libggml0
 Architecture: any
 Multi-Arch: same
-Depends: libggml-base0 (= ${binary:Version}),
+Depends: argeo-libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends},
 Description: Tensor library for machine learning (loader)
@@ -35,7 +37,8 @@ Description: Tensor library for machine learning (loader)
  responsible for loading the various ggml backends,
  and connect them to the API provided by the ggml base library.
 
-Package: libggml-dev
+Package: argeo-libggml-dev
+Conflicts: libggml-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
@@ -46,10 +49,11 @@ Description: Tensor library for machine learning (development files)
  This developments package provides the files required to build
  software based on ggml.
 
-Package: libggml0-backend-cpu
+Package: argeo-libggml0-backend-cpu
+Conflicts: libggml0-backend-cpu
 Architecture: any
 Multi-Arch: same
-Depends: libggml-base0 (= ${binary:Version}),
+Depends: argeo-libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Description: Tensor library for machine learning (CPU backend)
@@ -61,20 +65,21 @@ Description: Tensor library for machine learning (CPU backend)
  allowing one to run computations on older CPU while still benefiting from
  the capabilities of recent ones.
 
-Package: libggml0-backend-rpc
+Package: argeo-libggml0-backend-rpc
 Architecture: any
 Multi-Arch: same
-Depends: libggml-base0 (= ${binary:Version}),
+Depends: argeo-libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Description: Tensor library for machine learning (RPC backend)
  The ggml RPC backend allows one to distribute computations over
  the network on remote ggml backends.
 
-Package: libggml0-backend-vulkan
-Architecture: amd64
+Package: argeo-libggml0-backend-vulkan
+Conflicts: libggml0-backend-vulkan
+Architecture: any
 Multi-Arch: same
-Depends: libggml-base0 (= ${binary:Version}),
+Depends: argeo-libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Build-Profiles: <!pkg.ggml.novulkan>
@@ -83,10 +88,11 @@ Description: Tensor library for machine learning (Vulkan backend)
  computations based on the Vulkan API. This is typically used
  to leverage GPU parallel computations capabilities.
 
-Package: libggml0-backend-cuda
-Architecture: amd64
+Package: argeo-libggml0-backend-cuda
+Conflicts: libggml0-backend-cuda
+Architecture: any
 Multi-Arch: same
-Depends: libggml-base0 (= ${binary:Version}),
+Depends: argeo-libggml-base0 (= ${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
 Build-Profiles: <!pkg.ggml.nocuda>

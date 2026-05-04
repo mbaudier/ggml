@@ -1,54 +1,5 @@
-ggml (0.9.11-1) unstable; urgency=medium
+argeo-ggml (0.9.11-1) unstable; urgency=medium
 
-  * Upstream release
+  * New package names
 
- -- Mathieu Baudier <mbaudier@argeo.org>  Fri, 03 Apr 2026 11:26:19 +0000
-
-ggml (0.9.7-1) unstable; urgency=medium
-
-  * Upstream release
-  * Better align with official Debian packages
-
- -- Mathieu Baudier <mbaudier@argeo.org>  Mon, 16 Feb 2026 05:14:00 +0000
-
-ggml (0.9.5-1) unstable; urgency=medium
-
-  * Upstream release
-  * Drop .so version patch, now provided by upstream
-
- -- Mathieu Baudier <mbaudier@argeo.org>  Sat, 03 Jan 2026 10:06:55 +0000
-
-ggml (0.9.4.395-1) unstable; urgency=medium
-
-  * Upstream llama.cpp and whisper.cpp syncs
-
- -- Mathieu Baudier <mbaudier@argeo.org>  Sat, 27 Dec 2025 10:52:27 +0000
-
-ggml (0.9.4.185-1) unstable; urgency=medium
-
-  * Upstream llama.cpp and whisper.cpp syncs
-  * Move backends to Debian location
-  * Build natively for Raspberry Pi5 on Ubuntu ARM
-
- -- Mathieu Baudier <mbaudier@argeo.org>  Tue, 11 Nov 2025 07:55:58 +0000
-
-ggml (0.9.4.58-1) unstable; urgency=medium
-
-  * Upstream llama.cpp sync
-  * Optimize arm64 build for Raspberry Pi 5
-
- -- Mathieu Baudier <mbaudier@argeo.org>  Sat, 18 Oct 2025 08:29:05 +0000
-
-ggml (0.9.4-1) unstable; urgency=medium
-
-  * Upstream release
-  * Drop OpenBLAS support
-
- -- Mathieu Baudier <mbaudier@argeo.org>  Fri, 10 Oct 2025 13:40:50 +0000
-
-ggml (0.9.1-1) unstable; urgency=medium
-
-  * Upstream release
-
- -- Mathieu Baudier <mbaudier@argeo.org>  Mon, 22 Sep 2025 11:44:18 +0000
- 
+ -- Mathieu Baudier <mbaudier@argeo.org>  Mon, 04 May 2026 09:13:45 +0000
