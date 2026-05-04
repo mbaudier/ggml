@@ -41,16 +41,16 @@ else # amd64
 
 CMAKE_OPTS += -DGGML_CPU_ALL_VARIANTS=ON
 
-ifeq ($(filter pkg.ggml.nocuda,$(DEB_BUILD_PROFILES)),)
-CMAKE_OPTS += -DGGML_CUDA=ON \
-              -DCMAKE_CUDA_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
-              -DCUDAToolkit_ROOT=/usr
-endif
-
 endif # arm64
 
 ifeq ($(filter pkg.ggml.novulkan,$(DEB_BUILD_PROFILES)),)
 CMAKE_OPTS += -DGGML_VULKAN=ON
+endif
+
+ifeq ($(filter pkg.ggml.nocuda,$(DEB_BUILD_PROFILES)),)
+CMAKE_OPTS += -DGGML_CUDA=ON \
+              -DCMAKE_CUDA_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \
+              -DCMAKE_CUDA_COMPILER=/usr/local/cuda-13/bin/nvcc
 endif
 
 CMAKE_OPTS += -DCMAKE_C_FLAGS_RELWITHDEBINFO="$(FLAGS_ARGEO)" \

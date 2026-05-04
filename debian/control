@@ -10,9 +10,11 @@ Build-Depends: cmake,
                lsb-release,
                debhelper-compat (= 13),
                pkgconf,
-               libvulkan-dev            <!pkg.ggml.novulkan>,
-               glslc                    <!pkg.ggml.novulkan>,
-               nvidia-cuda-toolkit-gcc  [amd64] <!pkg.ggml.nocuda>,
+               libvulkan-dev       <!pkg.ggml.novulkan>,
+               glslc               <!pkg.ggml.novulkan>,
+               cuda-nvcc-13-2      <!pkg.ggml.nocuda>,
+               libcublas-dev-13-2  <!pkg.ggml.nocuda>,
+               libcuda1            <!pkg.ggml.nocuda>,
 Rules-Requires-Root: no
 
 Package: argeo-libggml-base0
